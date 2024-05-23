@@ -15,6 +15,8 @@
  * trigger the firmware update.
  */
 
+#include <stm32g4xx_hal_fdcan.h>
+
 #include "aioli-board.h"
 
 #define SFOC_CMD 0x01

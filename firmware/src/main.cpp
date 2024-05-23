@@ -10,9 +10,24 @@
 // #include "./can.cpp"
 
 // Motor specific parameters.
+#define MOTOR_2204 1
+
+#ifdef MOTOR_MAD2408
 #define POLEPAIRS 4
 #define RPHASE 1.4
 #define MOTORKV 1000
+#elif MOTOR_SPARKFUN
+// Not working
+#define POLEPAIRS 8
+#define RPHASE 8
+#define MOTORKV 1000
+#define MOTORRESISTANCE 8
+#elif MOTOR_2204
+#define POLEPAIRS 7
+#define RPHASE 6.5
+#define MOTORKV 1000
+#define MOTORVOLTAGE 12
+#endif
 
 uint8_t useDFU = 0;
 uint8_t pendingFrame = 0;
@@ -60,6 +75,12 @@ void loop() {
 #ifdef HAS_MONITOR
   motor.monitor();
 #endif
+  Serial.println(configureFOC() == 1 ? "SFOC successfully init."
+                                     : "SFOC failed to init.");
+  Serial.println(configureCAN() == 1 ? "CAN successfully init."
+                                     : "CAN failed to init.");
+  Serial.println(configureDFU() == 1 ? "DFU successfully init."
+                                     : "DFU failed to init.");
 }
 
 uint8_t configureFOC() {

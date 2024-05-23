@@ -75,12 +75,6 @@ void loop() {
 #ifdef HAS_MONITOR
   motor.monitor();
 #endif
-  Serial.println(configureFOC() == 1 ? "SFOC successfully init."
-                                     : "SFOC failed to init.");
-  Serial.println(configureCAN() == 1 ? "CAN successfully init."
-                                     : "CAN failed to init.");
-  Serial.println(configureDFU() == 1 ? "DFU successfully init."
-                                     : "DFU failed to init.");
 }
 
 uint8_t configureFOC() {

@@ -29,15 +29,6 @@ static void configureCAN();
 FDCAN_TxHeaderTypeDef TxHeader;
 uint8_t TxData[8];
 
-static void configureCAN() {
-  Serial.println(can1.init(CanSpeed::Mbit1) == HAL_OK
-                     ? "CAN: initialized."
-                     : "CAN: error when initializing.");
-  can1.activateNotification(&can1RxHandler);
-  Serial.println(can1.start() == HAL_OK ? "CAN: started."
-                                        : "CAN: error starting.");
-}
-
 int dlcToLength(uint32_t dlc) {
   int length = dlc >> 16;
   if (length >= 13) {
@@ -67,8 +58,6 @@ static void handleCanMessage(FDCAN_RxHeaderTypeDef rxHeader, uint8_t *rxData) {
 
   // Move the data back to the main SFOC loop
   sfocCmdStr = *rxData;
-
-  digitalToggle(USER_LED);
 }
 
 void writeFrame(uint8_t writeData[]) {

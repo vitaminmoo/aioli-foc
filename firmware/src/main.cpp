@@ -10,23 +10,31 @@
 // #include "./can.cpp"
 
 // Motor specific parameters.
-#define MOTOR_2204 1
+
+#ifdef MOTOR_EM3215
+// https://www.sparkfun.com/products/20441
+// Not working
+#define POLEPAIRS 4  // magnets/2
+#define RPHASE 4     // (ohms as measured pole to pole)/ 2 (assuming WYE)
+#define MOTORKV \
+  1000  // probably not the real rating because we're not exactly flying with it
+#endif
 
 #ifdef MOTOR_MAD2408
-#define POLEPAIRS 4
+// insert URL here
+// Also verify these numbers, I don't have one nor do I really know what it is
+#define POLEPAIRS 8
 #define RPHASE 1.4
 #define MOTORKV 1000
-#elif MOTOR_SPARKFUN
-// Not working
-#define POLEPAIRS 8
-#define RPHASE 8
-#define MOTORKV 1000
-#define MOTORRESISTANCE 8
-#elif MOTOR_2204
+#endif
+
+#ifdef MOTOR_PTZ2204
+// https://www.aliexpress.us/item/3256804329499775.html
+// Requires manual removal of the internal obstruction to allow for full
+// rotation It's aluminum, use some flush cutters and it'll be fine
 #define POLEPAIRS 7
 #define RPHASE 6.5
 #define MOTORKV 1000
-#define MOTORVOLTAGE 12
 #endif
 
 uint8_t useDFU = 0;
